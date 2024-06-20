@@ -1,0 +1,169 @@
+{% extends 'admin_base.html' %}
+{% block main %}
+
+<div class="container card shadow m-2">
+    <div class="card-body">
+        <h5 class="p-2" style="border-bottom: 2px solid orange">Edit Lawyer/Advocates</h5>
+        <br>
+        <div class="row">
+            <div class="col-sm-12">
+                <form method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="form-row">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label>Full Name</label>
+                                <input type="text" name="LawyerName" class="form-control"
+                                       value="{{lawyer.LawyerName}}">
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label>Email ID</label>
+                                <input type="email" name="LawyerEmail" class="form-control"
+                                       value="{{lawyer.LawyerEmail}}">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label>Mobile Number</label>
+                                <input type="text" name="LawyerMobileNo" class="form-control"
+                                       value="{{lawyer.LawyerMobileNo}}">
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label>Office Address</label>
+                                <textarea name="OfficeAddress" class="form-control">{{lawyer.OfficeAddress}}</textarea>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label>City</label>
+                                <input type="text" name="City"
+                                       class="form-control" value="{{lawyer.City}}">
+                            </div>
+                        </div>
+
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label>State</label>
+                                <input type="text" name="State"
+                                       class="form-control" value="{{lawyer.State}}">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label>Languages Known (Ex: English,Hindi)</label>
+                                <input type="text" name="LanguageKnown"
+                                       class="form-control" value="{{lawyer.LanguageKnown}}">
+                            </div>
+                        </div>
+
+                        <div class="col-sm-3">
+                            <div class="form-group">
+                                <label>Profile Pic </label>
+                                <input type="file" name="ProfilePic" class="form-control">
+                            </div>
+                        </div>
+
+                        <div class="col-sm-3">
+                            <div class="form-group">
+                                <img src="{{lawyer.ProfilePic.url}}" name="ProfilePic" height="100" width="100">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label>Experience (In Years)</label>
+                                <input type="text" name="LawyerExp"
+                                       class="form-control" value="{{lawyer.LawyerExp}}">
+                            </div>
+                        </div>
+
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label>Practice Area</label>
+                                <select class="form-control" name="practiceArea" id="practiceArea">
+                                    <option value="{{lawyer.practiceArea.id}}">{{lawyer.practiceArea.PAreaName}}
+                                    </option>
+                                    {% for i in parea %}
+                                    <option value="{{i.id}}">{{i.PAreaName}}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label>Courts (Ex: High Court, Supreme Court)</label>
+                                <input type="text" name="Courts"
+                                       class="form-control" value="{{lawyer.Courts}}">
+                            </div>
+                        </div>
+
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label>Website</label>
+                                <input type="text" name="Website" class="form-control" value="{{lawyer.Website}}">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label>Description</label>
+                                <textarea name="Description" class="form-control">{{lawyer.Description}}</textarea>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label>Status</label>
+                                <select class="form-control" name="Status" id="Status">
+                                    <option value="{{lawyer.id}}">{{lawyer.Status}}</option>
+                                    <option value="Active">Active</option>
+                                    <option value="Block">Block</option>
+                                </select>
+                            </div>
+                        </div>
+
+                    </div>
+                    <input type="submit" value="Update Lawyer" class="btn btn-primary float-right">
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% if error == "no" %}
+<script>
+	   alert('Lawyers/Advocates are Updated Successfully..');
+	   window.location=('{% url 'manage_Lawyer' %}');
+
+
+</script>
+{% endif %}
+
+{% if error == "yes" %}
+<script>
+	    alert('Something went wrong, Try Again');
+
+
+</script>
+{% endif %}
+
+{% endblock %}

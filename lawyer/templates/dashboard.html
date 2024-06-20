@@ -1,0 +1,63 @@
+{% extends 'admin_base.html' %}
+{% block main %}
+
+<div class="row text-center mt-5">
+    <div class="col-sm-12 p-2">
+                <h4 class="text-success">Welcome Back to Lawyer Record Management System</h4>
+    </div>
+</div>
+
+<br><br><br>
+<div class="row mt-5">
+
+    <div class="col-sm-3 p-2">
+        <div class="card shadow">
+            <div class="card-body">
+                <h5 class="text-danger">Total Practice Area</h5>
+                <h5>{{practice}}</h5>
+            </div>
+            <div class="card-footer">
+                <a href="{% url 'manage_PracticeArea' %}">View Details >></a>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-sm-3 p-2">
+        <div class="card shadow">
+            <div class="card-body">
+                <h5 class="text-danger">Total Lawyer/Advocate</h5>
+                <h5>{{lawyer}}</h5>
+            </div>
+            <div class="card-footer">
+                <a href="{% url 'manage_Lawyer' %}">View Details >></a>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-sm-3 p-2">
+        <div class="card shadow">
+            <div class="card-body">
+                <h5 class="text-danger">Approve Lawyer/Advocate</h5>
+                <h5>{{activelaw}}</h5>
+            </div>
+            <div class="card-footer">
+                <a href="{% url 'manage_Lawyer' %}">View Details >></a>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-sm-3 p-2">
+        <div class="card shadow">
+            <div class="card-body">
+                <h5 class="text-danger">Block Lawyer/Advocate</h5>
+                <h5>{{blocklaw}}</h5>
+            </div>
+            <div class="card-footer">
+                <a href="{% url 'manage_Lawyer' %}">View Details >></a>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+{% endblock  %}

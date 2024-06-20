@@ -1,0 +1,41 @@
+{% extends 'admin_base.html' %}
+{% block main %}
+
+<div class="container card shadow mt-5">
+    <div class="card-body">
+        <h5 class="p-2" style="border-bottom: 2px solid orange">Manage Lawyer/Advocates</h5>
+        <div class="container-fluid mt-5">
+
+            <table class="table table-bordered table-sm" id="example">
+                <thead>
+                <tr>
+                    <th>S No.</th>
+                    <th>Profile Pic</th>
+                    <th>Full Name</th>
+                    <th>Email ID</th>
+                    <th>Mobile Number</th>
+                    <th>Reg. Date</th>
+                    <th>Action</th>
+                </tr>
+                </thead>
+                <tbody>
+                   {% for i in lawyer%}
+                <tr>
+                    <td>{{forloop.counter}}</td>
+                    <td><img src="{{i.ProfilePic.url}}" height="70" width="70"></td>
+                    <td>{{i.LawyerName}}</td>
+                    <td>{{i.LawyerEmail}}</td>
+                    <td>{{i.LawyerMobileNo}}</td>
+                    <td>{{i.RegDate}}</td>
+                    <td><a href="{% url 'edit_Lawyer' i.id %}" class="text-primary">Edit</a> | <a href="{% url 'view_Reports' i.id %}" class="text-primary">view</a> |
+                        <a href="{% url 'delete_Lawyer' i.id %}" class="text-danger" onclick="return confirm('Are You Sure?')">Delete</a></td>
+                </tr>
+                 {% endfor %}
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+</div>
+
+{% endblock %}

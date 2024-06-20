@@ -1,0 +1,41 @@
+{% extends 'admin_base.html' %}
+{% block main %}
+
+
+<div class="container card shadow mt-5">
+    <div class="card-body">
+        <h5 class="p-2" style="border-bottom: 2px solid orange">Edit Practice Area</h5>
+        <div class="container-fluid mt-3">
+            <form method="post">
+                {% csrf_token %}
+
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="form-group">
+                            <label>Practice Area</label>
+                            <input type="text" name="PAreaName" class="form-control" value="{{parea.PAreaName}}" required>
+                        </div>
+                    </div>
+                </div>
+			  <input type="submit" value="Update" class="btn btn-primary float-right">
+			</form>
+
+		</div>
+	</div>
+</div>
+
+
+{% if error == "no" %}
+<script>
+	   alert('Practice Area has been Updated...');
+	   window.location=('{% url 'manage_PracticeArea' %}');
+</script>
+{% endif %}
+
+{% if error == "yes" %}
+<script>
+	    alert('Something went wrong, Try Again');
+</script>
+{% endif %}
+
+{% endblock %}

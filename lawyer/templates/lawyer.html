@@ -1,0 +1,59 @@
+{% include 'navigation.html' %}
+{% load static %}
+
+<style type="text/css">
+.zoom {
+	transition: transform .1s; /* Animation */
+	margin: 0 auto;
+}
+
+.zoom:hover {
+	transform: scale(1.2); /* (150% zoom)*/
+}
+
+</style>
+
+<body>
+<img src="{% static 'images/lawyer.jpg' %}" width="100%" height="450">
+
+<div class="container mt-2">
+    <h3 class="page-title text-center">Lawyer/Advocate</h3>
+    <div class="row">
+        {% for i in posts %}
+        <div class="col-sm-4 p-2 mt-3">
+            <div class="card" style="width:300px">
+                <a href="{% url 'lawyerDtls' i.id %}"><img class="card-img-top zoom" src="{{i.ProfilePic.url}}"
+                                                           alt="Card image"
+                                                           style="width:100% ; height : 200px"></a>
+                <hr>
+                <div class="card-body">
+                    <h4 class="card-title text-center">{{i.LawyerName}}</h4>
+                    <span style="color: green"><p class="card-text text-center">{{i.practiceArea.PAreaName}}</p></span>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <!-- Start Pagination -->
+
+    <div class="pagination my-3 float-right">
+    <span class="step-links">
+        {% if posts.has_previous %}
+            <a href="?page=1">&laquo; </a>
+            <a href="?page={{ posts.previous_page_number }}">previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ posts.number }} of {{ posts.paginator.num_pages }}.
+        </span>
+
+        {% if posts.has_next %}
+            <a href="?page={{ posts.next_page_number }}">next</a>
+            <a href="?page={{ posts.paginator.num_pages }}"> &raquo;</a>
+        {% endif %}
+    </span>
+    </div>
+    <!-- End Pagination -->
+</div>
+</body>

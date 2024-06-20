@@ -1,0 +1,249 @@
+{% extends 'admin_base.html' %}
+{% block main %}
+
+<div class="container card shadow m-2">
+    <div class="card-body">
+        <h5 class="p-2" style="border-bottom: 2px solid orange">Add Lawyer/Advocate</h5>
+        <br>
+        <div class="row">
+            <div class="col-sm-12">
+                <form method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="form-row">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label>Full Name</label>
+                                <input type="text" name="LawyerName" class="form-control" oninput="validateName(event);"
+                                       placeholder="Enter Lawyer/Advocated Full Name" required>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label>Email ID</label>
+                                <input type="email" name="LawyerEmail" class="form-control"
+                                       placeholder="Enter Email ID" required>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label>Mobile Number</label>
+                                <input type="text"  name="LawyerMobileNo" class="form-control" oninput="validateNumber(event);"
+                                       placeholder="Enter Mobile Number" required>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label>Office Address</label>
+                                <textarea name="OfficeAddress" placeholder="Enter Office Address"
+                                          class="form-control" required></textarea>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label>City</label>
+                                <input type="text" name="City"
+                                       class="form-control" placeholder="Enter City" required>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label>State</label>
+                                <input type="text" name="State"
+                                       class="form-control" placeholder="Enter State" required>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label>Languages Known (Ex: English,Hindi)</label>
+                                <input type="text" name="LanguageKnown"
+                                       class="form-control" placeholder="Enter Language" required>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label>Profile Pic</label>
+                                <input type="file" name="ProfilePic" class="form-control" required>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label>Experience (In Years)</label>
+                                <input type="text" name="LawyerExp" oninput="validateExperience(event);"
+                                       class="form-control" placeholder="Enter Experience" required>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label>Practice Area</label>
+                                <select class="form-control" name="practiceArea" required>
+                                    <option value="">Select Practice Area</option>
+                                    {% for i in parea %}
+                                    <option value="{{i.id}}">{{i.PAreaName}}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label>Courts (Ex: High Court, Supreme Court)</label>
+                                <input type="text" name="Courts"
+                                       class="form-control" placeholder="Enter Court Name" required>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label>Website</label>
+                                <input type="text" name="Website" class="form-control" placeholder="Enter website"
+                                       required>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Description</label>
+                        <textarea name="Description" class="form-control" placeholder="Enter Description"
+                                  required></textarea>
+                    </div>
+                    <input type="submit" value="Save Lawyer" class="btn btn-primary float-right">
+                </form>
+            </div>
+        </div>
+
+
+        {% if error == "no" %}
+        <script>
+	   alert('Lawyers/Advocates are added Successfully..');
+	   window.location=('{% url 'manage_Lawyer' %}');
+
+
+        </script>
+        {% endif %}
+
+        {% if error == "yes" %}
+        <script>
+	    alert('Something went wrong, Try Again');
+
+
+        </script>
+        {% endif %}
+        <script>
+            // Validation
+
+            function name_number(event){
+                let string = event.target.value;
+                let regex = /^[a-zA-Z]/
+                
+                for(let i=0; i<string.length; i++){
+                    if(string.charAt(i).match(regex)){
+                        event.target.setCustomValidity('');
+                    }else{
+                    if(string.charAt(i) == ' '){
+                        event.target.setCustomValidity('');
+                    }
+                    else{
+                        event.target.setCustomValidity('Special symbols other than blank space not allowed');
+                    }
+                    }
+                }
+                
+                return true;
+            }
+
+            function number_number(event){
+                let string = event.target.value;
+                let regex = /^[0-9]/
+                
+                for(let i=0; i < string.length; i++){
+                    if(string.charAt(i).match(regex)){
+                        event.target.setCustomValidity('');
+                    }else{
+                        console.log("number bad");
+                        event.target.setCustomValidity('Only numbers are allowed');
+                        event.preventDefault();
+                        return false;
+                    }
+                }
+            
+                return true;
+            }
+            
+            function number_length(event){
+                let string = event.target.value;
+                console.log("number length check");
+
+                if(string.length == 10){
+                    console.log("Number length pass")
+                    event.target.setCustomValidity('');
+                }
+                else{
+                    event.target.setCustomValidity('10 numbers must be there');
+                    return false;
+                }
+            }
+
+            function experience_length(event){
+                let string = event.target.value;
+
+                if(string.length <=2){
+                    event.target.setCustomValidity('');
+                }
+                else{
+                    event.target.setCustomValidity('Maximum experience range is 0 - 99');
+                    return false;
+                }
+            }
+
+            
+            
+            function validateName(event){
+                let string = event.target.value;
+
+                if(!name_number(event)){
+                    return;
+                }
+            }
+
+            function validateNumber(event){
+                let string = event.target.value;
+            
+                if(!number_number(event)){
+                    return;
+                }
+
+                if(!number_length(event)){
+                    return;
+                }
+            }
+
+            function validateExperience(event){
+                let string = event.target.value;
+
+                if(!number_number(event)){
+                    return;
+                }
+
+                if(!experience_length(event)){
+                    return;
+                }
+            }
+
+        </script>
+        {% endblock %}
